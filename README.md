@@ -9,6 +9,12 @@ Building Requirements
 
 ## Instructions
 ### motifs2pt
+Get a specific modification
+example
+<pre><code>
+motifs2pt Drad.motifs.gff.gz --ptbase CCGCGG  --ptsite 2 >Drad.CCGCGG_motifs.gff    #linux system
+python ./bin/motifs2pt.pyc Drad.motifs.gff.gz --ptbase CCGCGG --ptsite 2 >Drad.CCGCGG_motifs.gff #Other systems
+</code></pre>
 <pre><code>
 ./motifs2pt -h
 usage: motifs2pt [-h] -ptb SRT [-pts INT] [--coverage INT] [-ipd FLOAT] gff
