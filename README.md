@@ -12,7 +12,7 @@ Building Requirements
 Get a specific modification
 example
 <pre><code>
-motifs2pt Drad.motifs.gff.gz --ptbase CCGCGG  --ptsite 2 >Drad.CCGCGG_motifs.gff    #linux system
+motifs2pt ./bin/Drad.motifs.gff.gz --ptbase CCGCGG  --ptsite 2 >Drad.CCGCGG_motifs.gff    #linux system
 python ./bin/motifs2pt.pyc Drad.motifs.gff.gz --ptbase CCGCGG --ptsite 2 >Drad.CCGCGG_motifs.gff #Other systems
 </code></pre>
 <pre><code>
