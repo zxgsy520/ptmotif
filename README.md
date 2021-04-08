@@ -1,2 +1,38 @@
-# ptmotif
-Screen the results of pt modification from methylation modification based on mass spectrometry data
+ptmotif
+==============
+### Version: 1.0.0
+ptmotif is used for genome pt modification and methylation modification analysis
+
+Building Requirements
+-----------
+* Python 2.7 or 3.5+ (with setuptools package installed)
+
+## Instructions
+### motifs2pt
+<pre><code>
+./motifs2pt -h
+usage: motifs2pt [-h] -ptb SRT [-pts INT] [--coverage INT] [-ipd FLOAT] gff
+
+name:
+     motifs2pt.py Extraction of PT modifications from base modification results
+
+attention:
+     motifs2pt.py motif.gff --ptbase GATC --ptsite 1 --coverage 5 --ipdratio 0.5 >pt.gff
+
+version: v1.2.0
+contact:  Xingguo Zhang <113178210@qq.com>    
+
+positional arguments:
+  gff                   Input the methylation modification result file (gff).
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -ptb SRT, --ptbase SRT
+                        Input PT modified base type.
+  -pts INT, --ptsite INT
+                        Input the position of the PT modification on the modified
+                        base (starting from 1); default=2.
+  --coverage INT        Modified base coverage; default=10.
+  -ipd FLOAT, --ipdratio FLOAT
+                        Modified base IPDRatio; default=1.
+</code></pre>
