@@ -3,6 +3,7 @@
 
 import os
 import sys
+import gzip
 import json
 import math
 import logging
@@ -10,9 +11,9 @@ import argparse
 
 LOG = logging.getLogger(__name__)
 
-__version__ = "0.1.0"
+__version__ = "1.1.0"
 __author__ = ("Xingguo Zhang",)
-__email__ = "113178210@qq.com"
+__email__ = "invicoun@foxmail.com"
 __all__ = []
 
 
@@ -103,7 +104,7 @@ fill="{fill}"\
     return string
 
 
-def ipd_label(id, x, y, label="",transform = 0, stroke="#000000" , font_size="24", font="", fill="#000"):    
+def ipd_label(id, x, y, label="",transform = 0, stroke="#000000" , font_size="24", font="", fill="#000"):
 
     space = "preserve"
     text_anchor = "start"
@@ -179,7 +180,7 @@ fill="{fill}"/>
 
 
 def main_axis(fig_length, fig_height, frame, av_height, height):
-    
+
     config = ""
     ystart_x = frame
     ystart_y = frame
@@ -212,7 +213,7 @@ def axis_xscale(frame, fig_height, av_height, height, main_len=8, minor_len=4, i
         name = "pxscale_main"+str(n)
         y = fig_height/2.0-(i+1)*av_height
         config += ipd_line(name, x1, y, main_x, y)+"\n"
-        
+
         name = "pxscale_minor"+str(n)
         y = fig_height/2.0-i*av_height-0.5*av_height
         config += ipd_line(name, x1, y, minor_x, y)+"\n"
@@ -249,11 +250,11 @@ def axis_yscale(frame, fig_height, height, av_height, max_x, hist_space, av_leng
 
 
 def axis_yscale_value(fig_height, frame, height, av_height):
-   
-    n = 0 
+
+    n = 0
     config = ""
     content = av_height/2.0
-   
+
     for i in range(1, height+1):
         n +=1
         name = "pyscale_value"+str(n)
@@ -286,7 +287,7 @@ def main_picture(px, py, nx, ny, sx, fig_length, fig_height, frame, space, hist_
     for i in range(max_x):
 
         if i%space ==0:
-            s += 1   
+            s += 1
             name = "psite"+str(n)
             px_site = av_length*i+hist_space+frame+width/5
             py_site = fig_height/2.0+av_height*height+22
@@ -299,7 +300,7 @@ def main_picture(px, py, nx, ny, sx, fig_length, fig_height, frame, space, hist_
         phname = "phist"+str(n)
         ntname = "nxscale_value"+str(n)
         nhname = "nhist"+str(n)
-       
+
         pxt = av_length*i+hist_space+frame+width/5
         pyt = fig_height/2.0-0.5*av_height+av_height/3.5
         config += ipd_text(ptname, pxt, pyt, pipd_value)+"\n"
@@ -328,31 +329,14 @@ def main_picture(px, py, nx, ny, sx, fig_length, fig_height, frame, space, hist_
 
     return config
 
-
-def data_processing(py, ny):
-    
-    npy = []
-    nny = []    
-    py = py.strip().split(',')
-    ny = ny.strip().split(',')
-    
-    for i in py:
-        npy.append(float(i))
-
-    for i in ny:
-        nny.append(float(i))
-
-    return npy, nny
-
-
 def out_conf(prepare_data, out_name, fig_length, fig_height):
 
     with open(out_name, 'w') as fh:
         fh.write(CONF.format(data=prepare_data, width=fig_length, height=fig_height))
 
 
-def draw_ipdratio(px, py, nx, ny, sx, out_name, fig_length, fig_height, frame, space=5, hist_space=5):
-    
+def draw_ipdratio(px, py, nx, ny, sx, out_name, fig_length=1200, fig_height=600, frame=60, space=5, hist_space=5):
+
     config = ""
     max_x = max(len(px), len(nx))
     max_y = max(max(py), max(ny))
@@ -360,7 +344,7 @@ def draw_ipdratio(px, py, nx, ny, sx, out_name, fig_length, fig_height, frame, s
     av_height = (fig_height-2.5*frame)/(2*height)
     av_length = (fig_length-2.5*frame)/max_x
     center = av_height/2.0
-    
+
     config += main_axis(fig_length, fig_height, frame, av_height, height)
     config += axis_xscale(frame, fig_height, av_height, height)
     config += axis_yscale(frame, fig_height, height, av_height, max_x, hist_space, av_length)
@@ -371,29 +355,86 @@ def draw_ipdratio(px, py, nx, ny, sx, out_name, fig_length, fig_height, frame, s
 
     out_conf(config, out_name, fig_length, fig_height)
 
+    return 0
 
-def ipd_add_args(parser):
-    parser.add_argument('-pb', '--pbase', metavar='STR', required=True,
-                        help='Base sequence on the positive strand.')
-    parser.add_argument('-nb', '--nbase', metavar='STR', required=True,
-                        help='Base sequence on the negative strand.')
-    parser.add_argument('-pipd', '--pipdratio', metavar='LIST', required=True,
-                        help='List of positive chain IPDRatio values.')
-    parser.add_argument('-nipd', '--nipdratio', metavar='LIST', required=True,
-                        help='List of negative chain IPDRatio values.')
-    parser.add_argument('-s', '--start', metavar='INT', required=True,
-                        help='Start point of analysis.')
-    parser.add_argument('-e', '--end', metavar='INT', required=True,
-                        help='End point of analysis.')
+
+def read_csv(file):
+
+    if file.endswith(".gz"):
+        fc = gzip.open(file)
+    else:
+        fc = open(file)
+
+    n = 0
+    head = ""
+    for line in fc:
+        if isinstance(line, bytes):
+            line = line.decode('utf-8')
+        line = line.strip().replace('"', '')
+        if not line:
+            continue
+        line  = line.split(',')
+        if n == 0:
+            head = line
+        else:
+            yield [head, line, n]
+        n += 1
+    fc.close()
+
+    return 0
+
+
+def plot_ipd(file, tigid="", start=1, length=1200, height=600, distance=600):
+
+    end = start + 40
+    px = []
+    py = []
+    nx = []
+    ny = []
+    sx = []
+
+    for head, line, n in read_csv(file):
+        seqid, tpl, strand, base = line[0], int(line[1]), int(line[2]), line[3]
+        ipdratio = float(line[8])
+
+        if tigid != seqid:
+            continue
+        if tpl < start:
+            continue
+        if tpl > end:
+            break
+
+        if strand == 0:
+            sx.append(tpl)
+            px.append(base)
+            py.append(ipdratio)
+            continue
+        if strand == 1:
+            nx.append(base)
+            ny.append(ipdratio)
+
+    out_name  = "%s_%s_%s_idp.svg" % (tigid, start, end)
+
+    draw_ipdratio(px, py, nx, ny, sx, out_name, length, height, distance)
+
+    return 0
+
+
+def add_hlep_args(parser):
+
+    parser.add_argument("input", metavar='FILE', type=str,
+        help="Input files.")
+    parser.add_argument("-id", "--tigid", metavar='STR', type=str, default='tig0001',
+        help="Input sequence id, default='tig0001'.")
+    parser.add_argument("-s", "--start", metavar='INT', type=int, default=0,
+        help="Input start position, default=0.")
     parser.add_argument('-ph', '--height', type=int, default=600,
-                        help='Set picture height(default=600).')
+        help='Set picture height(default=600).')
     parser.add_argument('-pl', '--length', type=int, default=1200,
-                        help='Set picture length,(default=1200).')
+        help='Set picture length,(default=1200).')
     parser.add_argument('-d', '--distance', type=int, default=60,
-                        help='Set border distance,(default=60).')
-    parser.add_argument('-o', '--out', type=str, default='idp.svg',
-                        help='Output svg file name.')
-    
+        help='Set border distance,(default=60).')
+
     return parser
 
 
@@ -410,23 +451,15 @@ def main():
 name:
         plot_ipd.py -- Draw a separate graph of ipdratio values
 attention:
-        plot_ipd.py -pb CTCCGAGATCCACTGAAGCGCGTCGATCGAACCCCAGAATCCAGCGATAA 
-                          -nb GAGGCTCTAGGTGACTTCGCGCAGCTAGCTTGGGGTCTTAGGTCGCTATT
-                          -pipd 0.898,0.974,0.799,0.786,1.257,0.853,0.934,0.543,0.898,0.920,0.749,1.026,0.993,1.296,1.046,1.068,1.093,0.964,0.873,0.833,0.766,0.609,1.424,0.921,1.535,3.389,1.142,0.933,0.803,0.843,0.814,0.901,1.087,0.788,0.816,0.773,1.017,0.857,0.887,1.096,0.950,0.868,0.936,0.822,0.982,0.958,0.719,1.633,0.742,0.837
-                           -nipd 0.734,0.853,1.598,0.734,0.877,0.547,0.915,0.880,0.886,0.704,0.982,0.550,1.029,0.730,0.653,0.871,0.989,0.635,0.976,0.825,0.900,0.811,1.264,0.808,0.921,1.107,1.171,0.899,0.816,0.671,0.923,0.807,1.032,1.349,0.941,1.063,0.640,0.764,0.560,0.776,0.686,1.258,0.778,0.856,0.815,0.985,0.760,0.887,0.708,0.837
-                            -s 73304
-                            -e 73354
-
+        plot_ipd.py WP3NRDnd1.modifications.csv.gz -id tig0001 -s 200
 version: %s
 contact:  %s <%s>\
     """ % (__version__, " ".join(__author__), __email__))
 
-    parser = ipd_add_args(parser)
+    parser = add_hlep_args(parser)
     args = parser.parse_args()
-    sx = range(int(args.start), int(args.end))
-    py,ny = data_processing(args.pipdratio, args.nipdratio)
 
-    draw_ipdratio(args.pbase, py, args.nbase, ny, sx, args.out, args.length, args.height, args.distance)
+    plot_ipd(args.input, args.tigid, args.start, args.length, args.height, args.distance)
 
 
 if __name__ == "__main__":
