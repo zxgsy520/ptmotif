@@ -10,7 +10,7 @@ Building Requirements
 ## Instructions
 ### bax2bam
 <pre><code>
-/bax2bam bax.h5 -o out --subread --pulsefeatures=DeletionQV,DeletionTag,InsertionQV,IPD,MergeQV,SubstitutionQV,PulseWidth,SubstitutionTag
+bax2bam bax.h5 -o out --subread --pulsefeatures=DeletionQV,DeletionTag,InsertionQV,IPD,MergeQV,SubstitutionQV,PulseWidth,SubstitutionTag
 </code></pre>
 
 ### motif
