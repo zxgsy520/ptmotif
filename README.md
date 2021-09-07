@@ -12,13 +12,15 @@ Building Requirements
 <pre><code>
 /bax2bam bax.h5 -o out --subread --pulsefeatures=DeletionQV,DeletionTag,InsertionQV,IPD,MergeQV,SubstitutionQV,PulseWidth,SubstitutionTag
 </code></pre>
+
 ###motif
+<pre><code>
 pbalign subread.bam sample.fasta align.bam --tmpDir tmp --nproc 4 --concordant
 samtools faidx sample.fasta
 ipdSummary align.bam --reference sample.fasta \
     -v -W contig_ids.txt --methylFraction --gff modifications.gff --csv modifications.csv \
     --identify m6A,m4C  --numWorkers 8
-###
+</code></pre>
 
 ### motifs2pt
 Get a specific modification
