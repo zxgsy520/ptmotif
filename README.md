@@ -8,12 +8,12 @@ Building Requirements
 * Python 2.7 or 3.5+ (with setuptools package installed)
 
 ## Instructions
-###bax2bam
+### bax2bam
 <pre><code>
 /bax2bam bax.h5 -o out --subread --pulsefeatures=DeletionQV,DeletionTag,InsertionQV,IPD,MergeQV,SubstitutionQV,PulseWidth,SubstitutionTag
 </code></pre>
 
-###motif
+### motif
 <pre><code>
 pbalign subread.bam sample.fasta align.bam --tmpDir tmp --nproc 4 --concordant
 samtools faidx sample.fasta
