@@ -11,6 +11,7 @@ Building Requirements
 ### bax2bam
 <pre><code>
 bax2bam bax.h5 -o out --subread --pulsefeatures=DeletionQV,DeletionTag,InsertionQV,IPD,MergeQV,SubstitutionQV,PulseWidth,SubstitutionTag
+split_bam.py subreads.bam -p name -n 9100
 </code></pre>
 
 ### motif
