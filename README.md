@@ -57,3 +57,7 @@ optional arguments:
   -ipd FLOAT, --ipdratio FLOAT
                         Modified base IPDRatio; default=1.
 </code></pre>
+
+Publications
+------------
+Jian H, Xu G, Yi Y, Hao Y, Wang Y, Xiong L, Wang S, Liu S, Meng C, Wang J, Zhang Y, Chen C, Feng X, Luo H, Zhang H, Zhang X, Wang L, Wang Z, Deng Z, Xiao X. The origin and impeded dissemination of the DNA phosphorothioation system in prokaryotes. Nat Commun. 2021 Nov 4;12(1):6382. doi: [10.1038/s41467-021-26636-7](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8569181/). PMID: 34737280; PMCID: PMC8569181.
