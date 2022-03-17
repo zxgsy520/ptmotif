@@ -20,10 +20,9 @@ mkdir kineticsTools
 cd kineticsTools
 wget -c https://github.com/PacificBiosciences/pbcommand/releases/download/2.1.1/pbcommand-2.1.1.tar.gz
 wget -c https://github.com/PacificBiosciences/pbcore/releases/download/2.1.2/pbcore-2.1.2.tar.gz
-conda create --prefix=/Work/software/kineticsTools/v1.0.0 -c bioconda pbcore python
 wget -c https://github.com/zxgsy520/kineticsTools/archive/refs/tags/v1.0.0.tar.gz
-tar -zxvf kineticsTools-1.0.0
-/Work/software/kineticsTools/v1.0.0/bin/python setup.py install
+conda create --prefix=/Work/software/kineticsTools/v1.0.0 -c bioconda python=3.7
+/Work/software/kineticsTools/v1.0.0/bin/python setup.py install     #以此安装pbcommand、pbcore和kineticsTools即可
 ```
 
 ## Instructions
