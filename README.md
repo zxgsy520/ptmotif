@@ -12,7 +12,10 @@ Building Requirements
 
 ## Installation
 ```
-conda create --prefix=/Work/software/kineticsTools/v1.0.0 -c bioconda bax2bam=0.0.9 pbalign=0.3.2 python=3.7
+cd /Work/software/
+mkdir kineticsTools
+cd kineticsTools
+conda create --prefix=/Work/software/kineticsTools/v1.0.0 -c bioconda bax2bam=0.0.9 pbalign=0.3.2 python=2.7
 wget -c https://github.com/zxgsy520/kineticsTools/archive/refs/tags/v1.0.0.tar.gz
 ```
 
