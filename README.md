@@ -8,15 +8,16 @@ Building Requirements
 * Python 2.7 or 3.5+ (with setuptools package installed)
 * [bax2bam](https://github.com/PacificBiosciences/bax2bam)  #网页打不开可以用[conda](https://anaconda.org/bioconda/bax2bam)安装
 * [pbalign](https://github.com/PacificBiosciences/pbalign)  #网页打不开可以用[conda](https://anaconda.org/bioconda/pbalign)安装
-* [pbcore](https://github.com/PacificBiosciences/pbbioconda) 
+* [pbcore](https://github.com/PacificBiosciences/pbbioconda) #pbcore只有python2的版本
 * [kineticsTools](https://github.com/PacificBiosciences/kineticsTools)  #修复bug的[kineticsTools](https://github.com/zxgsy520/kineticsTools)
 
 ## Installation
 ```
+conda create --prefix=/Work/software/pbtools/v1.0.0 -c bioconda bax2bam=0.0.9 pbalign=0.3.2    #注意检测里面的samtools有没有问题
 cd /Work/software/
 mkdir kineticsTools
 cd kineticsTools
-conda create --prefix=/Work/software/kineticsTools/v1.0.0 -c bioconda bax2bam=0.0.9 pbalign=0.3.2 pbcore=1.6.5 python=2.7
+conda create --prefix=/Work/software/kineticsTools/v1.0.0 -c bioconda pbcore python
 wget -c https://github.com/zxgsy520/kineticsTools/archive/refs/tags/v1.0.0.tar.gz
 tar -zxvf kineticsTools-1.0.0
 /Work/software/kineticsTools/v1.0.0/bin/python setup.py install
