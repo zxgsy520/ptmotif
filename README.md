@@ -6,6 +6,8 @@ ptmotif is used for genome pt modification and methylation modification analysis
 Building Requirements
 -----------
 * Python 2.7 or 3.5+ (with setuptools package installed)
+* [bax2bam](https://github.com/PacificBiosciences/bax2bam)  #网页打不开可以用[conda](https://anaconda.org/bioconda/bax2bam)安装
+* [pbalign](https://github.com/PacificBiosciences/pbalign)  #网页打不开可以用[conda](https://anaconda.org/bioconda/pbalign)安装
 
 ## Instructions
 ### bax2bam
