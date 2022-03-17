@@ -5,11 +5,11 @@ ptmotif is used for genome pt modification and methylation modification analysis
 
 Building Requirements
 -----------
-* Python 2.7 or 3.5+ (with setuptools package installed)
+* 3.5+ (with setuptools package installed)
 * [bax2bam](https://github.com/PacificBiosciences/bax2bam)  #网页打不开可以用[conda](https://anaconda.org/bioconda/bax2bam)安装
 * [pbalign](https://github.com/PacificBiosciences/pbalign)  #网页打不开可以用[conda](https://anaconda.org/bioconda/pbalign)安装
 * [pbcore](https://github.com/PacificBiosciences/pbbioconda) #[pbcore](https://github.com/PacificBiosciences/pbcore/releases/download/2.1.2/pbcore-2.1.2.tar.gz)使用pip或者conda安装只有python2的版本，需要下载原包安装
-* [kineticsTools](https://github.com/PacificBiosciences/kineticsTools)  #修复bug的[kineticsTools](https://github.com/zxgsy520/kineticsTools)
+* [kineticsTools](https://github.com/PacificBiosciences/kineticsTools)  #修复bug的[kineticsTools](https://github.com/zxgsy520/kineticsTools)  #只支持python3
 
 ## Installation
 ```
